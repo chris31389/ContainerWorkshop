@@ -12,6 +12,10 @@ env:
   deploymentFile: 'gamingwebapp.minikube.yaml'
   namespace: 'containerworkshop'
   DOCKER_REGISTRY: 'local/'
+  DOCKER_TLS_VERIFY: '1'
+  DOCKER_HOST: 'tcp://192.168.49.2:2376'
+  DOCKER_CERT_PATH: '/home/vscode/.minikube/certs'
+  MINIKUBE_ACTIVE_DOCKERD: 'minikube'
 
 jobs:
 
