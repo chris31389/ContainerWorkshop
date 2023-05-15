@@ -28,14 +28,3 @@ jobs:
         docker compose build
         docker tag local/gamingwebapp:latest local/gamingwebapp:${{github.run_number}}
         docker tag local/leaderboardwebapi:latest local/leaderboardwebapi:${{github.run_number}}
-    - name: Replace tokens
-      uses: cschleiden/replace-tokens@v1.0
-      with:
-        files: ${{github.workspace}}/finished/deployment/${{env.deploymentFile}}
-      env: 
-        Build.BuildId: ${{github.run_number}}
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.4
-      with:
-        name: deploymentfiles
-        path: ${{github.workspace}}/finished/deployment/${{env.deploymentFile}}
