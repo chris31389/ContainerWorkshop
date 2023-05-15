@@ -1,0 +1,30 @@
+name: Build and deploy Retro Gaming solution  
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+    - 'finished/**'
+env:
+  imageRepository: 'gamingwebapp'
+  containerRegistry: 'local'
+  deploymentFile: 'gamingwebapp.minikube.yaml'
+  namespace: 'containerworkshop'
+  DOCKER_REGISTRY: 'local/'
+
+jobs:
+
+  build:
+
+    runs-on: ["self-hosted", "workshop"]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build an image from Dockerfile
+      working-directory: ./finished
+      run: |
+        docker compose build
+        docker tag local/gamingwebapp:latest local/gamingwebapp:${{github.run_number}}
+        docker tag local/leaderboardwebapi:latest local/leaderboardwebapi:${{github.run_number}}
