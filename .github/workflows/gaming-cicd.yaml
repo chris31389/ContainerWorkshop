@@ -39,3 +39,16 @@ jobs:
       with:
         name: deploymentfiles
         path: ${{github.workspace}}/finished/deployment/${{env.deploymentFile}}
+  deploy:
+    runs-on:  ["self-hosted", "workshop"]
+    needs: build
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: deploymentfiles
+    
+    - name: Run kubectl on frontend.yaml file to deploy new version
+      run: |
+        cat ./${{env.deploymentFile}}
+        kubectl apply -f ./${{env.deploymentFile}}
